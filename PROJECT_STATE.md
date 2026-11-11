@@ -2,7 +2,7 @@
 
 ## Current phase and step
 - Phase 1: Project skeleton (user's numbered build order).
-- Current step: Step 12, complete shared Commons types. `ServiceResponse<T>` exists and was previously verified. Next action: define shared error codes.
+- Current step: Step 14, add Actuator health and Swagger. Next action: add and verify the Actuator health endpoint.
 - Phase 0 complete: MySQL, RabbitMQ, Qdrant, Ollama, and Redis passed the local checks. User's Redis check returned `PONG`.
 - Ollama check: User ran a prompt with `llama3.2:3b` in the Ollama container and received `ready`.
 - Qdrant check: User confirmed the dashboard opens on Windows port 6333.
@@ -11,6 +11,8 @@
 - Status: Step 5 complete. The API module's `/.env` ignore rule, local credential file, and `.env.example` were verified. Compose validation with `.env` returned exit 0. User's IntelliJ terminal confirmed Docker Desktop's Linux engine is reachable (Docker Engine 29.8.1, `desktop-linux` context).
 
 ## Completed steps
+- Numbered Step 13: Verified API startup with the `local` and `docker` profiles and a passing API context test with the `test` profile.
+- Numbered Step 12: Verified the Commons response wrapper, error codes, enums, base exception, and correlation ID header constant.
 - Numbered Step 2: Verified that the Commons, Entity, and Model `.gitignore` rules match the API's and that Git ignores new `target/` output in all three modules. Existing tracked build artifacts and the ignore-file commit remain pending.
 - Read CODEX_INSTRUCTIONS.md and initialized this project tracker.
 - Phase 0, Step 1 passed: user-provided terminal output confirms java and javac version 21.0.10.
@@ -39,6 +41,7 @@
 - Commons reinstall verified: local Maven JAR contains ServiceResponse.class in the expected package.
 
 ## Decisions
+- Keep API configuration in `.properties` files. Select the runtime profile in the base `application.properties`, following DAO BOP. The file currently selects `docker` from its startup check. Use `local` for development.
 - Use MySQL in place of SQL Server for DocAssist. Keep Compose and local environment files inside `docassist-api`.
 - Use DAO BOP module-local `.gitignore` files and keep the API README in `docassist-api`. Follow the user's numbered build order for remaining work.
 - Follow CODEX_INSTRUCTIONS.md as the project architecture and mentoring guide.
@@ -60,7 +63,12 @@
 - docassist-api/pom.xml: generated API Maven configuration.
 - docassist-commons/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-commons/src/main/java/com/docassist/commons/utils/ServiceResponse.java: reviewed and compiled.
-- docassist-commons/src/main/java/com/docassist/commons/constants/Constants.java: empty placeholder.
+- docassist-commons/src/main/java/com/docassist/commons/enums/ErrorCode.java: reviewed and compiled. Defines `VALIDATION_ERROR` and `INTERNAL_ERROR`.
+- docassist-commons/src/main/java/com/docassist/commons/enums/DocumentStatus.java: reviewed and compiled. Defines `UPLOADED`, `PROCESSING`, `READY`, and `FAILED`.
+- docassist-commons/src/main/java/com/docassist/commons/enums/Role.java: reviewed and compiled. Defines `USER`.
+- docassist-commons/src/main/java/com/docassist/commons/enums/SummaryType.java: reviewed and compiled. Defines `SHORT` and `DETAILED`.
+- docassist-commons/src/main/java/com/docassist/commons/exception/DocAssistException.java: reviewed and compiled. Carries an `ErrorCode` and uses `RuntimeException` to store the message.
+- docassist-commons/src/main/java/com/docassist/commons/constants/Constants.java: reviewed and compiled. Defines `CORRELATION_ID_HEADER` as `X-Correlation-ID`.
 - docassist-model/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-entity/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-processor/pom.xml: generated Boot application POM reviewed.
@@ -69,8 +77,11 @@
 - docassist-processor/src/main/resources/application.properties: processor application name.
 - docassist-api/src/main/java/com/docassist/api/DocassistApiApplication.java: application entry point.
 - docassist-api/src/test/java/com/docassist/api/DocassistApiApplicationTests.java: passing context test.
-- docassist-api/src/main/resources/application.properties: application name.
+- docassist-api/src/main/resources/application.properties: application name and active profile selection.
+- docassist-api/src/main/resources/application-local.properties: sets port `8081`; user verified API startup on that port in IntelliJ.
+- docassist-api/src/main/resources/application-docker.properties: sets port `8080`; user verified that `docker` was active and the API started on that port in IntelliJ.
+- docassist-api/src/test/resources/application-test.properties: test-only settings. Surefire reported one passing context test with `test` active.
 
 ## Next steps
-1. Step 12: Complete shared error codes, enums, exceptions, and constants in Commons.
-2. Continue with API configuration and the remaining Phase 1 checks.
+1. Step 14: Add and verify Actuator health and Swagger in the API.
+2. Continue with the remaining Phase 1 checks.
