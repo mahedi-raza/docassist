@@ -1,11 +1,17 @@
 # Project State
 
 ## Current phase and step
-- Phase 1: Project skeleton (user requested starting Spring Boot before infrastructure).
-- Current step: Compile ServiceResponse<T> in IntelliJ.
-- Status: ServiceResponse source reviewed and correct at com.docassist.commons.utils with private fields, generic data, constructor, and getters. Expected compiled class not found at new package path; compile confirmation pending.
+- Phase 1: Project skeleton (user's numbered build order).
+- Current step: Step 12, complete shared Commons types. `ServiceResponse<T>` exists and was previously verified. Next action: define shared error codes.
+- Phase 0 complete: MySQL, RabbitMQ, Qdrant, Ollama, and Redis passed the local checks. User's Redis check returned `PONG`.
+- Ollama check: User ran a prompt with `llama3.2:3b` in the Ollama container and received `ready`.
+- Qdrant check: User confirmed the dashboard opens on Windows port 6333.
+- Step 7 progress: User verified MySQL credentials and queried the `docassist` database from inside the MySQL container. The query returned `docassist` and `connection_ok = 1`. User also confirmed signing in to the RabbitMQ management dashboard on Windows port 15672 using the configured account.
+- Step 6 complete: User's `docker compose ps -a` output confirmed all five containers are Up. MySQL publishes Windows port 3307 to container port 3306. Redis publishes Windows port 6380 to container port 6379. User's Ollama output confirmed successful downloads of `llama3.2:3b` and `nomic-embed-text`.
+- Status: Step 5 complete. The API module's `/.env` ignore rule, local credential file, and `.env.example` were verified. Compose validation with `.env` returned exit 0. User's IntelliJ terminal confirmed Docker Desktop's Linux engine is reachable (Docker Engine 29.8.1, `desktop-linux` context).
 
 ## Completed steps
+- Numbered Step 2: Verified that the Commons, Entity, and Model `.gitignore` rules match the API's and that Git ignores new `target/` output in all three modules. Existing tracked build artifacts and the ignore-file commit remain pending.
 - Read CODEX_INSTRUCTIONS.md and initialized this project tracker.
 - Phase 0, Step 1 passed: user-provided terminal output confirms java and javac version 21.0.10.
 - Phase 0, Step 2 passed: user-provided output confirms Maven 3.9.16 uses Java 21.0.10.
@@ -29,9 +35,12 @@
 - User confirmed successful model Maven install in IntelliJ.
 - API -> model/entity and processor -> entity dependencies reviewed; user confirmed entity install. API/processor context tests each passed. Extra processor -> model dependency found and requires removal.
 - Forbidden processor -> model dependency removed and verified; processor context test passed again. Module wiring complete.
-- ServiceResponse<T> source implementation and BOP-style package verified; compile confirmation pending.
+- ServiceResponse<T> source and BOP-style package reviewed; compilation confirmed by the class file under target/classes.
+- Commons reinstall verified: local Maven JAR contains ServiceResponse.class in the expected package.
 
 ## Decisions
+- Use MySQL in place of SQL Server for DocAssist. Keep Compose and local environment files inside `docassist-api`.
+- Use DAO BOP module-local `.gitignore` files and keep the API README in `docassist-api`. Follow the user's numbered build order for remaining work.
 - Follow CODEX_INSTRUCTIONS.md as the project architecture and mentoring guide.
 - Teach one small step at a time; wait for verification before advancing.
 - The user writes application code. Provide code only when requested.
@@ -50,7 +59,8 @@
 - PROJECT_STATE.md: progress, decisions, files, and next steps.
 - docassist-api/pom.xml: generated API Maven configuration.
 - docassist-commons/pom.xml: reviewed library POM; validation confirmed by user.
-- docassist-commons/src/main/java/com/docassist/commons/utils/ServiceResponse.java: reviewed and correct; compile pending.
+- docassist-commons/src/main/java/com/docassist/commons/utils/ServiceResponse.java: reviewed and compiled.
+- docassist-commons/src/main/java/com/docassist/commons/constants/Constants.java: empty placeholder.
 - docassist-model/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-entity/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-processor/pom.xml: generated Boot application POM reviewed.
@@ -62,6 +72,5 @@
 - docassist-api/src/main/resources/application.properties: application name.
 
 ## Next steps
-1. Confirm commons compile succeeds for the corrected ServiceResponse package.
-2. Continue API skeleton, exception handler, correlation filter, and logging aspect.
-3. Resume deferred Phase 0 infrastructure setup, starting with SQL Server; compose.yaml has not been confirmed created.
+1. Step 12: Complete shared error codes, enums, exceptions, and constants in Commons.
+2. Continue with API configuration and the remaining Phase 1 checks.
