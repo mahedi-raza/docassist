@@ -1,7 +1,9 @@
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\constants\Constants.java
+D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\constants\ResponseCode.java
+D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\constants\ResponseDesc.java
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\enums\DocumentStatus.java
-D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\enums\ErrorCode.java
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\enums\Role.java
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\enums\SummaryType.java
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\exception\DocAssistException.java
+D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\exception\ValidationException.java
 D:\Mahedi's work\DocAssist - AI Document Assitant\docassist-commons\src\main\java\com\docassist\commons\utils\ServiceResponse.java

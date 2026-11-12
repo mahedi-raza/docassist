@@ -2,7 +2,7 @@
 
 ## Current phase and step
 - Phase 1: Project skeleton (user's numbered build order).
-- Current step: Step 14, add Actuator health and Swagger. Next action: add and verify the Actuator health endpoint.
+- Current step: Step 16, add the API correlation ID filter. Step 15 source, compilation, and Spring context startup were verified. Handler-specific HTTP responses have not yet been exercised.
 - Phase 0 complete: MySQL, RabbitMQ, Qdrant, Ollama, and Redis passed the local checks. User's Redis check returned `PONG`.
 - Ollama check: User ran a prompt with `llama3.2:3b` in the Ollama container and received `ready`.
 - Qdrant check: User confirmed the dashboard opens on Windows port 6333.
@@ -11,6 +11,9 @@
 - Status: Step 5 complete. The API module's `/.env` ignore rule, local credential file, and `.env.example` were verified. Compose validation with `.env` returned exit 0. User's IntelliJ terminal confirmed Docker Desktop's Linux engine is reachable (Docker Engine 29.8.1, `desktop-linux` context).
 
 ## Completed steps
+- Numbered Step 15 (build and startup): Added DAO BOP-style global advice and shared numeric response codes and descriptions. The latest API Maven context test passed (1 test, 0 failures, 0 errors).
+- Numbered Step 14 (Swagger): Verified springdoc Web MVC UI version `3.2.0` in the API POM. User confirmed the Swagger check passed after the update.
+- Numbered Step 14 (health): Verified the API POM includes the Actuator starter. User confirmed `/actuator/health` on local port `8081` returned `UP` and listed `liveness` and `readiness` groups.
 - Numbered Step 13: Verified API startup with the `local` and `docker` profiles and a passing API context test with the `test` profile.
 - Numbered Step 12: Verified the Commons response wrapper, error codes, enums, base exception, and correlation ID header constant.
 - Numbered Step 2: Verified that the Commons, Entity, and Model `.gitignore` rules match the API's and that Git ignores new `target/` output in all three modules. Existing tracked build artifacts and the ignore-file commit remain pending.
@@ -63,11 +66,12 @@
 - docassist-api/pom.xml: generated API Maven configuration.
 - docassist-commons/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-commons/src/main/java/com/docassist/commons/utils/ServiceResponse.java: reviewed and compiled.
-- docassist-commons/src/main/java/com/docassist/commons/enums/ErrorCode.java: reviewed and compiled. Defines `VALIDATION_ERROR` and `INTERNAL_ERROR`.
+- docassist-commons/src/main/java/com/docassist/commons/constants/ResponseCode.java and ResponseDesc.java: shared numeric response codes and client-facing descriptions.
 - docassist-commons/src/main/java/com/docassist/commons/enums/DocumentStatus.java: reviewed and compiled. Defines `UPLOADED`, `PROCESSING`, `READY`, and `FAILED`.
 - docassist-commons/src/main/java/com/docassist/commons/enums/Role.java: reviewed and compiled. Defines `USER`.
 - docassist-commons/src/main/java/com/docassist/commons/enums/SummaryType.java: reviewed and compiled. Defines `SHORT` and `DETAILED`.
-- docassist-commons/src/main/java/com/docassist/commons/exception/DocAssistException.java: reviewed and compiled. Carries an `ErrorCode` and uses `RuntimeException` to store the message.
+- docassist-commons/src/main/java/com/docassist/commons/exception/DocAssistException.java and ValidationException.java: shared exceptions with numeric response codes.
+- docassist-api/src/main/java/com/docassist/api/advice/GlobalExceptionHandler.java: separate handlers for validation, unreadable bodies, missing resources, and internal errors.
 - docassist-commons/src/main/java/com/docassist/commons/constants/Constants.java: reviewed and compiled. Defines `CORRELATION_ID_HEADER` as `X-Correlation-ID`.
 - docassist-model/pom.xml: reviewed library POM; validation confirmed by user.
 - docassist-entity/pom.xml: reviewed library POM; validation confirmed by user.
@@ -83,5 +87,5 @@
 - docassist-api/src/test/resources/application-test.properties: test-only settings. Surefire reported one passing context test with `test` active.
 
 ## Next steps
-1. Step 14: Add and verify Actuator health and Swagger in the API.
+1. Step 16: Add and verify the API correlation ID filter.
 2. Continue with the remaining Phase 1 checks.

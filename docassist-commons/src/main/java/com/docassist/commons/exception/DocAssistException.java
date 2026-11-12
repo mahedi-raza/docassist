@@ -1,17 +1,21 @@
 package com.docassist.commons.exception;
 
-import com.docassist.commons.enums.ErrorCode;
-
 public class DocAssistException extends RuntimeException{
 
-    private final ErrorCode errorCode;
+    private final int code;
 
-    public DocAssistException(ErrorCode errorCode, String message) {
+    public DocAssistException(int code, String message) {
         super(message);
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
+    public DocAssistException(int code, String message, Throwable cause) {
+        super(message, cause);
+        this.code = code;
     }
+
+    public int getCode() {
+        return code;
+    }
+
 }

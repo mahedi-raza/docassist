@@ -1,6 +1,7 @@
-com\docassist\commons\enums\ErrorCode.class
+com\docassist\commons\exception\ValidationException.class
 com\docassist\commons\enums\SummaryType.class
 com\docassist\commons\constants\Constants.class
+com\docassist\commons\constants\ResponseCode.class
 com\docassist\commons\enums\DocumentStatus.class
 com\docassist\commons\enums\Role.class
 com\docassist\commons\utils\ServiceResponse.class
