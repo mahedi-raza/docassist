@@ -2,7 +2,9 @@
 
 ## Current phase and step
 - Phase 1: Project skeleton (user's numbered build order).
-- Current step: Step 16, add the API correlation ID filter. Step 15 source, compilation, and Spring context startup were verified. Handler-specific HTTP responses have not yet been exercised.
+- Current step: Step 16, verify the remaining invalid-header case for the API correlation ID filter.
+- Step 16 progress: User verified that a valid caller ID is echoed and a missing header generates an ID after the short-circuit condition was fixed. Source review confirmed validation and MDC cleanup. Invalid-header behavior remains to be verified.
+- Step 15 verification: Source, compilation, and Spring context startup were verified. Handler-specific HTTP responses have not yet been exercised.
 - Phase 0 complete: MySQL, RabbitMQ, Qdrant, Ollama, and Redis passed the local checks. User's Redis check returned `PONG`.
 - Ollama check: User ran a prompt with `llama3.2:3b` in the Ollama container and received `ready`.
 - Qdrant check: User confirmed the dashboard opens on Windows port 6333.
